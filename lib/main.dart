@@ -144,26 +144,18 @@ class _MyHomePageState extends State<MyHomePage> {
     generated = true;
   }
 
-  void _selectOption() {
-    // Проверка выбора по крайней мере одного варианта из каждого блока
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Выбранные опции:'),
-          content: Text(
-              'Цвет: ${selectedColor()} \nРезультат: ${selectedResult()} \nПереход: ${selectedTransition()}'),
-          actions: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('ОК'),
-            ),
-          ],
-        );
-      },
+  void _selectOption(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            'Цвет: ${selectedColor()} \nРезультат: ${selectedResult()} \nПереход: ${selectedTransition()}'),
+        action: SnackBarAction(
+          label: 'ОК',
+          onPressed: () {
+            // Действие при нажатии на кнопку "ОК"
+          },
+        ),
+      ),
     );
   }
 
@@ -405,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (checkStates())
               ElevatedButton(
                 onPressed: () {
-                  _selectOption();
+                  _selectOption(context);
                 },
                 child: Text('Открыть Dialog!'),
               ),
